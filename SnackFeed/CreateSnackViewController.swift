@@ -38,11 +38,11 @@ class CreateSnackViewController: UIViewController {
         button.backgroundColor = .clear
         button.clipsToBounds = true
         button.layer.cornerRadius = 35
-        button.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.3).cgColor
+        button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.borderWidth = 4
         
-        let circle = UIView(frame: CGRect(x: 8, y: 8, width: 56, height: 56))
-        circle.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        let circle = UIView(frame: CGRect(x: 7, y: 7, width: 56, height: 56))
+        circle.backgroundColor = .lightGray
         circle.layer.cornerRadius = 28
         circle.clipsToBounds = true
         circle.isUserInteractionEnabled = false
