@@ -151,7 +151,6 @@ class CreateSnackViewController: UIViewController {
         // Initialise a UIImage with our image data
         let capturedImage = UIImage.init(data: imageData , scale: 1.0)
         if let image = capturedImage {
-            // Save our captured image to photos album
             snackImageView.image = image
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         }

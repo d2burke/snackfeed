@@ -15,6 +15,7 @@
 		82585F041F65ABD3004B015D /* SnackFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F031F65ABD3004B015D /* SnackFeedTests.swift */; };
 		82585F0F1F65ABD3004B015D /* SnackFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F0E1F65ABD3004B015D /* SnackFeedUITests.swift */; };
 		82585F1D1F65ABF1004B015D /* CreateSnackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */; };
+		82585F1F1F65E967004B015D /* SnackCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F1E1F65E967004B015D /* SnackCamera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		82585F0E1F65ABD3004B015D /* SnackFeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackFeedUITests.swift; sourceTree = "<group>"; };
 		82585F101F65ABD3004B015D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSnackViewController.swift; sourceTree = "<group>"; };
+		82585F1E1F65E967004B015D /* SnackCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackCamera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				82585EEB1F65ABD3004B015D /* AppDelegate.swift */,
 				82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */,
+				82585F1E1F65E967004B015D /* SnackCamera.swift */,
 				82585EEF1F65ABD3004B015D /* Main.storyboard */,
 				82585EF51F65ABD3004B015D /* Assets.xcassets */,
 				82585EF71F65ABD3004B015D /* LaunchScreen.storyboard */,
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82585F1D1F65ABF1004B015D /* CreateSnackViewController.swift in Sources */,
+				82585F1F1F65E967004B015D /* SnackCamera.swift in Sources */,
 				82585EEC1F65ABD3004B015D /* AppDelegate.swift in Sources */,
 				82585EF41F65ABD3004B015D /* SnackFeed.xcdatamodeld in Sources */,
 			);
