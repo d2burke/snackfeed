@@ -53,7 +53,7 @@ class CreateSnackViewController: UIViewController {
     
     let shareButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.backgroundColor = .lightGray
+        button.layer.backgroundColor = UIColor.lightGray.cgColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 35
         button.layer.borderColor = UIColor.white.cgColor
@@ -61,6 +61,14 @@ class CreateSnackViewController: UIViewController {
         return button
     }()
     
+    var typeLabel: UILabel = {
+        let label = UILabel()
+        label.frame = CGRect(x:35, y:320, width: 375, height: 20)
+        label.text = "Food Type"
+        label.textColor = .lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        return label
+    }()
     var selectedTypeItem: IndexPath? = nil
     var selectedType: String? = nil
     let types = ["Bagel", "Donut", "Pizza", "Fruit", "Vegetables", "Cake", "Cookies"]
@@ -75,9 +83,18 @@ class CreateSnackViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
+    var allergenLabel: UILabel = {
+        let label = UILabel()
+        label.frame = CGRect(x:35, y:425, width: 375, height: 20)
+        label.text = "Allergens"
+        label.textColor = .lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        return label
+    }()
     var selectedAllergenItem: IndexPath? = nil
     var selectedAllergen: String? = nil
     let allergens = ["Milk", "Eggs", "Peanuts", "Soy", "Wheat", "Sugar", "Shellfish"]
@@ -92,6 +109,7 @@ class CreateSnackViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -106,7 +124,9 @@ class CreateSnackViewController: UIViewController {
         view.addSubview(previewView)
         prepareCameraPreview()
         
+        view.addSubview(typeLabel)
         view.addSubview(typeCollectionView)
+        view.addSubview(allergenLabel)
         view.addSubview(allergenCollectionView)
         
         view.addSubview(shareButton)
@@ -225,11 +245,11 @@ extension CreateSnackViewController: UICollectionViewDataSource, UICollectionVie
         if collectionView == typeCollectionView {
             selectedTypeItem = indexPath
             selectedType = types[indexPath.row]
-            print("Type: \(selectedType ?? "None")")
+            typeLabel.text = selectedType
         } else {
             selectedAllergenItem = indexPath
             selectedAllergen = allergens[indexPath.row]
-            print("Allergen: \(selectedType ?? "None")")
+            typeLabel.text = selectedAllergen
         }
         collectionView.reloadData()
     }
