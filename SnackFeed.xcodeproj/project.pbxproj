@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		82585EEC1F65ABD3004B015D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585EEB1F65ABD3004B015D /* AppDelegate.swift */; };
-		82585EEE1F65ABD3004B015D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585EED1F65ABD3004B015D /* ViewController.swift */; };
 		82585EF11F65ABD3004B015D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82585EEF1F65ABD3004B015D /* Main.storyboard */; };
 		82585EF41F65ABD3004B015D /* SnackFeed.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 82585EF21F65ABD3004B015D /* SnackFeed.xcdatamodeld */; };
 		82585EF61F65ABD3004B015D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82585EF51F65ABD3004B015D /* Assets.xcassets */; };
 		82585EF91F65ABD3004B015D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82585EF71F65ABD3004B015D /* LaunchScreen.storyboard */; };
 		82585F041F65ABD3004B015D /* SnackFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F031F65ABD3004B015D /* SnackFeedTests.swift */; };
 		82585F0F1F65ABD3004B015D /* SnackFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F0E1F65ABD3004B015D /* SnackFeedUITests.swift */; };
+		82585F1D1F65ABF1004B015D /* CreateSnackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		82585EE81F65ABD3004B015D /* SnackFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnackFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82585EEB1F65ABD3004B015D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		82585EED1F65ABD3004B015D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		82585EF01F65ABD3004B015D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		82585EF31F65ABD3004B015D /* SnackFeed.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SnackFeed.xcdatamodel; sourceTree = "<group>"; };
 		82585EF51F65ABD3004B015D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		82585F0A1F65ABD3004B015D /* SnackFeedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnackFeedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82585F0E1F65ABD3004B015D /* SnackFeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackFeedUITests.swift; sourceTree = "<group>"; };
 		82585F101F65ABD3004B015D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSnackViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				82585EEB1F65ABD3004B015D /* AppDelegate.swift */,
-				82585EED1F65ABD3004B015D /* ViewController.swift */,
+				82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */,
 				82585EEF1F65ABD3004B015D /* Main.storyboard */,
 				82585EF51F65ABD3004B015D /* Assets.xcassets */,
 				82585EF71F65ABD3004B015D /* LaunchScreen.storyboard */,
@@ -262,7 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82585EEE1F65ABD3004B015D /* ViewController.swift in Sources */,
+				82585F1D1F65ABF1004B015D /* CreateSnackViewController.swift in Sources */,
 				82585EEC1F65ABD3004B015D /* AppDelegate.swift in Sources */,
 				82585EF41F65ABD3004B015D /* SnackFeed.xcdatamodeld in Sources */,
 			);
@@ -433,11 +433,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 973RBN29J8;
 				INFOPLIST_FILE = SnackFeed/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.snackfeed.SnackFeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -448,11 +449,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 973RBN29J8;
 				INFOPLIST_FILE = SnackFeed/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.snackfeed.SnackFeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

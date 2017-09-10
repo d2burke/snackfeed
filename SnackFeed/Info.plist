@@ -41,5 +41,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>For taking beautiful photos of snacks</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For uploading beautiful photos of snacks</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>For saving your beautiful snack photos</string>
 </dict>
 </plist>
