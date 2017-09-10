@@ -61,6 +61,38 @@ class CreateSnackViewController: UIViewController {
         return button
     }()
     
+    var selectedTypeItem: IndexPath? = nil
+    var selectedType: String? = nil
+    let types = ["Bagel", "Donut", "Pizza", "Fruit", "Vegetables", "Cake", "Cookies"]
+    lazy var typeCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0;
+        layout.minimumLineSpacing = 0;
+        let collectionView = UICollectionView(frame: CGRect(x:0, y:340, width: 375, height: 80), collectionViewLayout: layout)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "type")
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    
+    var selectedAllergenItem: IndexPath? = nil
+    var selectedAllergen: String? = nil
+    let allergens = ["Milk", "Eggs", "Peanuts", "Soy", "Wheat", "Sugar", "Shellfish"]
+    lazy var allergenCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 0;
+        layout.minimumLineSpacing = 0;
+        let collectionView = UICollectionView(frame: CGRect(x:0, y:420, width: 375, height: 80), collectionViewLayout: layout)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "allergen")
+        collectionView.backgroundColor = .clear
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,11 +104,14 @@ class CreateSnackViewController: UIViewController {
         view.addSubview(previewView)
         prepareCameraPreview()
         
+        view.addSubview(typeCollectionView)
+        view.addSubview(allergenCollectionView)
+        
         view.addSubview(shareButton)
         
         view.addSubview(cameraButton)
         cameraButton.frame = CGRect(
-            x: view.frame.size.width/2 - 30,
+            x: view.frame.size.width/2 - 35,
             y: view.frame.size.height - 90,
             width: 70,
             height: 70
@@ -180,5 +215,52 @@ extension CreateSnackViewController : AVCapturePhotoCaptureDelegate {
         }
         
         processImage(imageData)
+    }
+}
+
+extension CreateSnackViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == typeCollectionView {
+            selectedTypeItem = indexPath
+            selectedType = types[indexPath.row]
+            print("Type: \(selectedType ?? "None")")
+        } else {
+            selectedAllergenItem = indexPath
+            selectedAllergen = allergens[indexPath.row]
+            print("Allergen: \(selectedType ?? "None")")
+        }
+        collectionView.reloadData()
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return collectionView == typeCollectionView ? types.count : allergens.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: 80)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == typeCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "type", for: indexPath)
+            let circle = UIView(frame: CGRect(x: 10, y: 10, width: 60, height: 60))
+            circle.backgroundColor = .lightGray
+            circle.layer.cornerRadius = 30
+            circle.clipsToBounds = true
+            cell.addSubview(circle)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "allergen", for: indexPath)
+            let circle = UIView(frame: CGRect(x: 10, y: 10, width: 60, height: 60))
+            circle.backgroundColor = .lightGray
+            circle.layer.cornerRadius = 30
+            circle.clipsToBounds = true
+            cell.addSubview(circle)
+            return cell
+        }
     }
 }
