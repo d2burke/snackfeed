@@ -67,6 +67,7 @@ class CreateSnackViewController: UIViewController {
     lazy var typeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 0)
         layout.minimumInteritemSpacing = 0;
         layout.minimumLineSpacing = 0;
         let collectionView = UICollectionView(frame: CGRect(x:0, y:340, width: 375, height: 80), collectionViewLayout: layout)
@@ -83,9 +84,10 @@ class CreateSnackViewController: UIViewController {
     lazy var allergenCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 0)
         layout.minimumInteritemSpacing = 0;
         layout.minimumLineSpacing = 0;
-        let collectionView = UICollectionView(frame: CGRect(x:0, y:420, width: 375, height: 80), collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect(x:0, y:440, width: 375, height: 80), collectionViewLayout: layout)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "allergen")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
