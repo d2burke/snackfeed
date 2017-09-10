@@ -249,7 +249,7 @@ extension CreateSnackViewController: UICollectionViewDataSource, UICollectionVie
         } else {
             selectedAllergenItem = indexPath
             selectedAllergen = allergens[indexPath.row]
-            typeLabel.text = selectedAllergen
+            allergenLabel.text = selectedAllergen
         }
         collectionView.reloadData()
     }
