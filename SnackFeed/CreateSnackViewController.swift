@@ -71,7 +71,7 @@ class CreateSnackViewController: UIViewController {
     }()
     var selectedTypeItem: IndexPath? = nil
     var selectedType: String? = nil
-    let types = ["Bagel", "Donut", "Pizza", "Fruit", "Vegetables", "Cake", "Cookies"]
+    let types = ["Donut", "Bagel", "Pizza", "Fruit", "Vegetables", "Cake", "Cookies"]
     lazy var typeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -84,6 +84,8 @@ class CreateSnackViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = false
+        collectionView.alpha = 0.2
         return collectionView
     }()
     
@@ -110,6 +112,8 @@ class CreateSnackViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isUserInteractionEnabled = false
+        collectionView.alpha = 0.2
         return collectionView
     }()
     
@@ -174,6 +178,10 @@ class CreateSnackViewController: UIViewController {
         if videoPreviewLayer != nil {
             captureSession.startRunning()
             previewView.isHidden = false
+            typeCollectionView.isUserInteractionEnabled = false
+            typeCollectionView.alpha = 0.2
+            allergenCollectionView.isUserInteractionEnabled = false
+            allergenCollectionView.alpha = 0.2
         }
         else if let captureDevice = AVCaptureDevice.default(for: .video) {
             do {
@@ -202,6 +210,12 @@ class CreateSnackViewController: UIViewController {
     }
     
     func processImage(_ imageData: Data) {
+        
+        typeCollectionView.isUserInteractionEnabled = true
+        typeCollectionView.alpha = 1
+        allergenCollectionView.isUserInteractionEnabled = true
+        allergenCollectionView.alpha = 1
+        
         captureSession.stopRunning()
         previewView.isHidden = true
         
