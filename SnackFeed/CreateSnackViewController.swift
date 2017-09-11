@@ -58,6 +58,7 @@ class CreateSnackViewController: UIViewController {
         button.layer.cornerRadius = 35
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 4
+        button.alpha = 0
         return button
     }()
     
@@ -67,6 +68,7 @@ class CreateSnackViewController: UIViewController {
         label.text = "Food Type"
         label.textColor = .lightGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.alpha = 0.1
         return label
     }()
     var selectedTypeItem: IndexPath? = nil
@@ -85,7 +87,7 @@ class CreateSnackViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isUserInteractionEnabled = false
-        collectionView.alpha = 0.2
+        collectionView.alpha = 0.1
         return collectionView
     }()
     
@@ -95,6 +97,7 @@ class CreateSnackViewController: UIViewController {
         label.text = "Allergens"
         label.textColor = .lightGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.alpha = 0.1
         return label
     }()
     var selectedAllergenItem: IndexPath? = nil
@@ -113,7 +116,7 @@ class CreateSnackViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isUserInteractionEnabled = false
-        collectionView.alpha = 0.2
+        collectionView.alpha = 0.1
         return collectionView
     }()
     
@@ -132,10 +135,9 @@ class CreateSnackViewController: UIViewController {
         view.addSubview(typeCollectionView)
         view.addSubview(allergenLabel)
         view.addSubview(allergenCollectionView)
-        
         view.addSubview(shareButton)
-        
         view.addSubview(cameraButton)
+        
         cameraButton.frame = CGRect(
             x: view.frame.size.width/2 - 35,
             y: view.frame.size.height - 90,
@@ -178,10 +180,20 @@ class CreateSnackViewController: UIViewController {
         if videoPreviewLayer != nil {
             captureSession.startRunning()
             previewView.isHidden = false
+            
             typeCollectionView.isUserInteractionEnabled = false
-            typeCollectionView.alpha = 0.2
             allergenCollectionView.isUserInteractionEnabled = false
-            allergenCollectionView.alpha = 0.2
+            shareButton.isHidden = true
+            cameraButton.isHidden = false
+            
+            UIView.animate(withDuration: 0.2) {
+                self.typeCollectionView.alpha = 0.1
+                self.typeLabel.alpha = 0.1
+                self.allergenCollectionView.alpha = 0.1
+                self.allergenLabel.alpha = 0.1
+                self.shareButton.alpha = 0
+            }
+            
         }
         else if let captureDevice = AVCaptureDevice.default(for: .video) {
             do {
@@ -211,10 +223,18 @@ class CreateSnackViewController: UIViewController {
     
     func processImage(_ imageData: Data) {
         
+        cameraButton.isHidden = true
+        shareButton.isHidden = false
         typeCollectionView.isUserInteractionEnabled = true
-        typeCollectionView.alpha = 1
         allergenCollectionView.isUserInteractionEnabled = true
-        allergenCollectionView.alpha = 1
+        
+        UIView.animate(withDuration: 0.2) {
+            self.typeCollectionView.alpha = 1
+            self.typeLabel.alpha = 1
+            self.allergenCollectionView.alpha = 1
+            self.allergenLabel.alpha = 1
+            self.shareButton.alpha = 1
+        }
         
         captureSession.stopRunning()
         previewView.isHidden = true
