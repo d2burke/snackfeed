@@ -93,7 +93,7 @@ class CreateSnackViewController: UIViewController {
     
     var allergenLabel: UILabel = {
         let label = UILabel()
-        label.frame = CGRect(x:35, y:425, width: 375, height: 20)
+        label.frame = CGRect(x:35, y:420, width: 375, height: 20)
         label.text = "Allergens"
         label.textColor = .lightGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -201,7 +201,7 @@ class CreateSnackViewController: UIViewController {
                 captureSession.addInput(input)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
                 videoPreviewLayer?.frame = previewView.layer.bounds
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 
