@@ -24,13 +24,13 @@ class SnackCamera: NSObject {
         if videoPreviewLayer != nil {
             captureSession.startRunning()
         }
-        else if let captureDevice = AVCaptureDevice.default(for: .video) {
+        else if let captureDevice = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInDuoCamera, mediaType: AVMediaTypeVideo, position: .back) {
             do {
                 let input = try AVCaptureDeviceInput(device: captureDevice)
                 captureSession.addInput(input)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
                 videoPreviewLayer?.frame = previewView.layer.bounds
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 

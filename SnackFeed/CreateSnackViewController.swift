@@ -195,13 +195,13 @@ class CreateSnackViewController: UIViewController {
             }
             
         }
-        else if let captureDevice = AVCaptureDevice.default(for: .video) {
+        else if let captureDevice = AVCaptureDevice.defaultDevice(withDeviceType: AVCaptureDeviceType.builtInDuoCamera, mediaType: AVMediaTypeVideo, position: .back) {
             do {
                 let input = try AVCaptureDeviceInput(device: captureDevice)
                 captureSession.addInput(input)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
                 videoPreviewLayer?.frame = previewView.layer.bounds
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 
@@ -249,9 +249,9 @@ class CreateSnackViewController: UIViewController {
 }
 
 extension CreateSnackViewController : AVCapturePhotoCaptureDelegate {
-    func photoOutput(_ captureOutput: AVCapturePhotoOutput,
-                     didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?,
-                     previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?,
+    func capture(_ captureOutput: AVCapturePhotoOutput,
+                 didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?,
+                 previewPhotoSampleBuffer: CMSampleBuffer?,
                      resolvedSettings: AVCaptureResolvedPhotoSettings,
                      bracketSettings: AVCaptureBracketedStillImageSettings?,
                      error: Error?) {
