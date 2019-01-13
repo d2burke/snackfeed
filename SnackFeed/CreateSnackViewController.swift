@@ -16,14 +16,30 @@ class CreateSnackViewController: UIViewController {
     
     let snackImageButton: UIButton = {
         let button = UIButton(type: .custom)
+        button.backgroundColor = .clear
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 35
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.borderWidth = 4
         return button
     }()
     
-    var snackImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 375, height: 300))
+    lazy var snackImageCropView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 300))
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        return view
+    }()
+    
+    lazy var previousCenterY: CGFloat = 150
+    
+    lazy var snackImageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        imageView.center = CGPoint(x: self.view.center.x, y: 150)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -123,9 +139,16 @@ class CreateSnackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(snackImageView)
+        view.addSubview(snackImageCropView)
+        snackImageCropView.addSubview(snackImageView)
+        
         view.addSubview(snackImageButton)
-        snackImageButton.frame = snackImageView.frame
+        snackImageButton.frame = CGRect(
+            x: 20,
+            y: view.frame.size.height - 90,
+            width: 70,
+            height: 70
+        )
         snackImageButton.addTarget(self, action: #selector(prepareCameraPreview), for: .touchUpInside)
         
         view.addSubview(previewView)
@@ -152,11 +175,40 @@ class CreateSnackViewController: UIViewController {
             width: 70,
             height: 70
         )
+        
+        let imagePanGesture = UIPanGestureRecognizer(target: self, action: #selector(imageDidPanGesture(recognizer:)))
+        snackImageView.addGestureRecognizer(imagePanGesture)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func imageDidPanGesture(recognizer: UIPanGestureRecognizer) {
+        var newCenterY = previousCenterY + recognizer.translation(in: snackImageView).y
+        
+        let maxOffset = ((snackImageView.frame.size.height - 300) / 2) + 150
+        let minOffset = -((snackImageView.frame.size.height - 300) / 2) + 150
+        
+        switch recognizer.state {
+        case .began: ()
+        case .changed:
+            var oldCenter = snackImageView.center
+            
+            if newCenterY > maxOffset {
+                newCenterY = maxOffset
+            } else if newCenterY < minOffset {
+                newCenterY = minOffset
+            }
+            
+            oldCenter.y = newCenterY
+            snackImageView.center = oldCenter
+        case .ended:
+            previousCenterY = max(min(newCenterY, maxOffset), minOffset)
+            print("End Offset %: \(snackImageView.frame.origin.y / snackImageView.frame.size.height)")
+        default: ()
+        }
     }
     
     @objc func takePhoto(_ sender: Any) {
