@@ -30,7 +30,7 @@ class SnackCamera: NSObject {
                 captureSession.addInput(input)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
                 videoPreviewLayer?.frame = previewView.layer.bounds
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 

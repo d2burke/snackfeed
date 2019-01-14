@@ -14,6 +14,8 @@ class CreateSnackViewController: UIViewController {
     var capturePhotoOutput: AVCapturePhotoOutput?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     
+    var snackImage: UIImage?
+    
     let snackImageButton: UIButton = {
         let button = UIButton(type: .custom)
         button.backgroundColor = .clear
@@ -24,27 +26,29 @@ class CreateSnackViewController: UIViewController {
         return button
     }()
     
+    let previewHeight: CGFloat = 320
     lazy var snackImageCropView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 300))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.previewHeight))
         view.clipsToBounds = true
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         return view
     }()
     
-    lazy var previousCenterY: CGFloat = 150
+    lazy var previousCenterY: CGFloat = self.previewHeight / 2
     
     lazy var snackImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
-        imageView.center = CGPoint(x: self.view.center.x, y: 150)
-        imageView.contentMode = .scaleAspectFill
+        imageView.center = CGPoint(x: self.view.center.x, y: self.previousCenterY)
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
-    var previewView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 375, height: 300))
+    lazy var previewView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        view.center = CGPoint(x: self.view.center.x, y: self.previousCenterY)
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
         return view
     }()
@@ -78,9 +82,9 @@ class CreateSnackViewController: UIViewController {
         return button
     }()
     
-    var typeLabel: UILabel = {
+    lazy var typeLabel: UILabel = {
         let label = UILabel()
-        label.frame = CGRect(x:35, y:320, width: 375, height: 20)
+        label.frame = CGRect(x:35, y: self.previewHeight + 20, width: self.view.frame.size.width, height: 20)
         label.text = "Food Type"
         label.textColor = .lightGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -96,7 +100,9 @@ class CreateSnackViewController: UIViewController {
         layout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 0)
         layout.minimumInteritemSpacing = 0;
         layout.minimumLineSpacing = 0;
-        let collectionView = UICollectionView(frame: CGRect(x:0, y:340, width: 375, height: 80), collectionViewLayout: layout)
+        let frame = CGRect(x:0, y: self.previewHeight + 40, width: self.view.frame.size.width, height: 80)
+        
+        let collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "type")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
@@ -107,9 +113,9 @@ class CreateSnackViewController: UIViewController {
         return collectionView
     }()
     
-    var allergenLabel: UILabel = {
+    lazy var allergenLabel: UILabel = {
         let label = UILabel()
-        label.frame = CGRect(x:35, y:420, width: 375, height: 20)
+        label.frame = CGRect(x:35, y: self.previewHeight + 120, width: self.view.frame.size.width, height: 20)
         label.text = "Allergens"
         label.textColor = .lightGray
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -125,7 +131,7 @@ class CreateSnackViewController: UIViewController {
         layout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 0)
         layout.minimumInteritemSpacing = 0;
         layout.minimumLineSpacing = 0;
-        let collectionView = UICollectionView(frame: CGRect(x:0, y:440, width: 375, height: 80), collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect(x:0, y: self.previewHeight + 140, width: self.view.frame.size.width, height: 80), collectionViewLayout: layout)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "allergen")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
@@ -151,7 +157,7 @@ class CreateSnackViewController: UIViewController {
         )
         snackImageButton.addTarget(self, action: #selector(prepareCameraPreview), for: .touchUpInside)
         
-        view.addSubview(previewView)
+        snackImageCropView.addSubview(previewView)
         prepareCameraPreview()
         
         view.addSubview(typeLabel)
@@ -171,10 +177,11 @@ class CreateSnackViewController: UIViewController {
         
         shareButton.frame = CGRect(
             x: view.frame.size.width - 90,
-            y: 300 - 35,
+            y: previewHeight - 35,
             width: 70,
             height: 70
         )
+        shareButton.addTarget(self, action: #selector(sharePhoto), for: .touchUpInside)
         
         let imagePanGesture = UIPanGestureRecognizer(target: self, action: #selector(imageDidPanGesture(recognizer:)))
         snackImageView.addGestureRecognizer(imagePanGesture)
@@ -186,29 +193,47 @@ class CreateSnackViewController: UIViewController {
     }
     
     @objc func imageDidPanGesture(recognizer: UIPanGestureRecognizer) {
-        var newCenterY = previousCenterY + recognizer.translation(in: snackImageView).y
+        let maxOffset = ((snackImageView.frame.size.height - previewHeight) / 2) + (previewHeight/2)
+        let minOffset = -((snackImageView.frame.size.height - previewHeight) / 2) + (previewHeight/2)
         
-        let maxOffset = ((snackImageView.frame.size.height - 300) / 2) + 150
-        let minOffset = -((snackImageView.frame.size.height - 300) / 2) + 150
+        var newCenterY = previousCenterY + recognizer.translation(in: snackImageView).y
+        newCenterY = max(min(newCenterY, maxOffset), minOffset)
         
         switch recognizer.state {
         case .began: ()
         case .changed:
             var oldCenter = snackImageView.center
-            
-            if newCenterY > maxOffset {
-                newCenterY = maxOffset
-            } else if newCenterY < minOffset {
-                newCenterY = minOffset
-            }
-            
             oldCenter.y = newCenterY
             snackImageView.center = oldCenter
         case .ended:
-            previousCenterY = max(min(newCenterY, maxOffset), minOffset)
-            print("End Offset %: \(snackImageView.frame.origin.y / snackImageView.frame.size.height)")
+            previousCenterY = newCenterY
+            if let image = snackImageView.image {
+                snackImage = cropped(image: image)
+            }
         default: ()
         }
+    }
+    
+    func cropped(image: UIImage) -> UIImage? {
+        let ratio = previewHeight / snackImageView.frame.size.height
+        let offsetPercentage = -snackImageView.frame.origin.y / snackImageView.frame.size.height
+        let newHeight = image.size.height * ratio
+        let offsetY = image.size.height * offsetPercentage
+        let cropRect = CGRect(x: offsetY, y: 0, width: newHeight, height: image.size.width)
+        
+        if let cgImage = image.cgImage, let cropped = cgImage.cropping(to: cropRect) {
+            return UIImage(cgImage: cropped, scale: 0, orientation: image.imageOrientation)
+        }
+
+        return nil
+    }
+    
+    @objc func sharePhoto() {
+        guard let image = snackImage else { return }
+        
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        prepareCameraPreview()
     }
     
     @objc func takePhoto(_ sender: Any) {
@@ -253,7 +278,7 @@ class CreateSnackViewController: UIViewController {
                 captureSession.addInput(input)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+                videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
                 videoPreviewLayer?.frame = previewView.layer.bounds
                 previewView.layer.addSublayer(videoPreviewLayer!)
                 
@@ -271,6 +296,9 @@ class CreateSnackViewController: UIViewController {
                 print(error)
             }
         }
+        
+        previousCenterY = (previewHeight/2)
+        snackImageView.center = CGPoint(x: self.view.center.x, y: previousCenterY)
     }
     
     func processImage(_ imageData: Data) {
@@ -295,7 +323,7 @@ class CreateSnackViewController: UIViewController {
         let capturedImage = UIImage.init(data: imageData , scale: 1.0)
         if let image = capturedImage {
             snackImageView.image = image
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            snackImage = cropped(image: image)
         }
     }
 }
