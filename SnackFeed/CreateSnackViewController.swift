@@ -16,7 +16,7 @@ class CreateSnackViewController: UIViewController {
     
     var snackImage: UIImage?
     
-    let snackImageButton: UIButton = {
+    let resetImageButton: UIButton = {
         let button = UIButton(type: .custom)
         button.backgroundColor = .clear
         button.clipsToBounds = true
@@ -26,7 +26,7 @@ class CreateSnackViewController: UIViewController {
         return button
     }()
     
-    let previewHeight: CGFloat = 320
+    lazy var previewHeight: CGFloat = self.view.frame.size.height * 0.4
     lazy var snackImageCropView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.previewHeight))
         view.clipsToBounds = true
@@ -57,13 +57,13 @@ class CreateSnackViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.backgroundColor = .clear
         button.clipsToBounds = true
-        button.layer.cornerRadius = 35
+        button.layer.cornerRadius = 50
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.borderWidth = 4
         
-        let circle = UIView(frame: CGRect(x: 7, y: 7, width: 56, height: 56))
+        let circle = UIView(frame: CGRect(x: 7, y: 7, width: 86, height: 86))
         circle.backgroundColor = .lightGray
-        circle.layer.cornerRadius = 28
+        circle.layer.cornerRadius = 43
         circle.clipsToBounds = true
         circle.isUserInteractionEnabled = false
         button.addSubview(circle)
@@ -148,14 +148,14 @@ class CreateSnackViewController: UIViewController {
         view.addSubview(snackImageCropView)
         snackImageCropView.addSubview(snackImageView)
         
-        view.addSubview(snackImageButton)
-        snackImageButton.frame = CGRect(
+        view.addSubview(resetImageButton)
+        resetImageButton.frame = CGRect(
             x: 20,
             y: view.frame.size.height - 90,
             width: 70,
             height: 70
         )
-        snackImageButton.addTarget(self, action: #selector(prepareCameraPreview), for: .touchUpInside)
+        resetImageButton.addTarget(self, action: #selector(prepareCameraPreview), for: .touchUpInside)
         
         snackImageCropView.addSubview(previewView)
         prepareCameraPreview()
@@ -168,10 +168,10 @@ class CreateSnackViewController: UIViewController {
         view.addSubview(cameraButton)
         
         cameraButton.frame = CGRect(
-            x: view.frame.size.width/2 - 35,
-            y: view.frame.size.height - 90,
-            width: 70,
-            height: 70
+            x: view.frame.size.width/2 - 50,
+            y: view.frame.size.height - 120,
+            width: 100,
+            height: 100
         )
         cameraButton.addTarget(self, action: #selector(takePhoto(_:)), for: .touchUpInside)
         
@@ -215,9 +215,9 @@ class CreateSnackViewController: UIViewController {
     }
     
     func cropped(image: UIImage) -> UIImage? {
-        let ratio = previewHeight / snackImageView.frame.size.height
+        let ratio = previewHeight / view.frame.size.width
         let offsetPercentage = -snackImageView.frame.origin.y / snackImageView.frame.size.height
-        let newHeight = image.size.height * ratio
+        let newHeight = image.size.width * ratio
         let offsetY = image.size.height * offsetPercentage
         let cropRect = CGRect(x: offsetY, y: 0, width: newHeight, height: image.size.width)
         
@@ -322,6 +322,14 @@ class CreateSnackViewController: UIViewController {
         // Initialise a UIImage with our image data
         let capturedImage = UIImage.init(data: imageData , scale: 1.0)
         if let image = capturedImage {
+            
+            // Adjust imageView frame to match the actual image
+            // dimensions for more accurate cropping
+            let imageRatio = image.size.height / image.size.width
+            var frame = snackImageView.frame
+            frame.size.height = frame.size.width * imageRatio
+            snackImageView.frame = frame
+            
             snackImageView.image = image
             snackImage = cropped(image: image)
         }
