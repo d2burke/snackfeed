@@ -19,6 +19,8 @@
 		82585F0F1F65ABD3004B015D /* SnackFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F0E1F65ABD3004B015D /* SnackFeedUITests.swift */; };
 		82585F1D1F65ABF1004B015D /* CreateSnackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */; };
 		82585F1F1F65E967004B015D /* SnackCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82585F1E1F65E967004B015D /* SnackCamera.swift */; };
+		82AC9C1C21EC4254000BE01A /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC9C1B21EC4254000BE01A /* Button.swift */; };
+		82AC9C1E21EC42BA000BE01A /* UIColor+Lighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AC9C1D21EC42BA000BE01A /* UIColor+Lighter.swift */; };
 		8766DDB289FD4E1B0A7CB428 /* Pods_SnackFeedUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A6FD701573D15570CE02E0 /* Pods_SnackFeedUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		82585F101F65ABD3004B015D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSnackViewController.swift; sourceTree = "<group>"; };
 		82585F1E1F65E967004B015D /* SnackCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackCamera.swift; sourceTree = "<group>"; };
+		82AC9C1B21EC4254000BE01A /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		82AC9C1D21EC42BA000BE01A /* UIColor+Lighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Lighter.swift"; sourceTree = "<group>"; };
 		84AB28ACCF30206AA1C7DB4A /* Pods-SnackFeedUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SnackFeedUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SnackFeedUITests/Pods-SnackFeedUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EE7230EDAC2C767A039E5B52 /* Pods_SnackFeedTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SnackFeedTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -147,6 +151,8 @@
 				82585F1C1F65ABF1004B015D /* CreateSnackViewController.swift */,
 				824C60DB1F6EE29500A7CF52 /* FeedViewController.swift */,
 				82585F1E1F65E967004B015D /* SnackCamera.swift */,
+				82AC9C1B21EC4254000BE01A /* Button.swift */,
+				82AC9C1D21EC42BA000BE01A /* UIColor+Lighter.swift */,
 				82585EEF1F65ABD3004B015D /* Main.storyboard */,
 				82585EF51F65ABD3004B015D /* Assets.xcassets */,
 				82585EF71F65ABD3004B015D /* LaunchScreen.storyboard */,
@@ -456,9 +462,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				82585F1D1F65ABF1004B015D /* CreateSnackViewController.swift in Sources */,
+				82AC9C1C21EC4254000BE01A /* Button.swift in Sources */,
 				82585F1F1F65E967004B015D /* SnackCamera.swift in Sources */,
 				824C60DC1F6EE29500A7CF52 /* FeedViewController.swift in Sources */,
 				82585EEC1F65ABD3004B015D /* AppDelegate.swift in Sources */,
+				82AC9C1E21EC42BA000BE01A /* UIColor+Lighter.swift in Sources */,
 				82585EF41F65ABD3004B015D /* SnackFeed.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

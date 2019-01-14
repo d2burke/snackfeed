@@ -16,13 +16,15 @@ class CreateSnackViewController: UIViewController {
     
     var snackImage: UIImage?
     
-    let resetImageButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .clear
+    let resetImageButton: Button = {
+        let button = Button()
+        button.defaultBackgroundColor = .clear
+        button.highlightColor = .lightGray
         button.clipsToBounds = true
         button.layer.cornerRadius = 35
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.borderWidth = 4
+        button.alpha = 0.1
         return button
     }()
     
@@ -53,16 +55,17 @@ class CreateSnackViewController: UIViewController {
         return view
     }()
     
-    let cameraButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .clear
+    let cameraButton: Button = {
+        let button = Button()
+        button.defaultBackgroundColor = .clear
+        button.highlightColor = .lightGray
         button.clipsToBounds = true
         button.layer.cornerRadius = 50
         button.layer.borderColor = UIColor.lightGray.cgColor
         button.layer.borderWidth = 4
         
         let circle = UIView(frame: CGRect(x: 7, y: 7, width: 86, height: 86))
-        circle.backgroundColor = .lightGray
+        circle.backgroundColor = UIColor.lightGray.lighter
         circle.layer.cornerRadius = 43
         circle.clipsToBounds = true
         circle.isUserInteractionEnabled = false
@@ -268,6 +271,7 @@ class CreateSnackViewController: UIViewController {
                 self.typeLabel.alpha = 0.1
                 self.allergenCollectionView.alpha = 0.1
                 self.allergenLabel.alpha = 0.1
+                self.resetImageButton.alpha = 0.1
                 self.shareButton.alpha = 0
             }
             
@@ -314,6 +318,7 @@ class CreateSnackViewController: UIViewController {
             self.allergenCollectionView.alpha = 1
             self.allergenLabel.alpha = 1
             self.shareButton.alpha = 1
+            self.resetImageButton.alpha = 1
         }
         
         captureSession.stopRunning()
